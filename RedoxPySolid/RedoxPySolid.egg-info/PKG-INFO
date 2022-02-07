@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: RedoxPySolid
+Version: 0.0.1
+Summary: Model of heterogeneous electrochemistry
+Home-page: UNKNOWN
+Author: Aleksei Marianov
+Author-email: marjanov.alexei@gmail.com
+License: UNKNOWN
+Description: 
+        Package allows for the explicit modelling of the heterogeneous electrochemical systems.
+Keywords: python,electrochemistry,voltammetry,redox
+Platform: UNKNOWN
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Programming Language :: C++
+Classifier: Programming Language :: Python
+Description-Content-Type: text/markdown
