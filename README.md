@@ -5,7 +5,7 @@ The full description of the method is given in the 'paper <https://pubs.acs.org/
 
 **Example:**
 
-'''python
+```python
 from RedoxPySolid.activeLayer import ElectrochemicallyActiveLayer
 from RedoxPySolid.VFSWV import VFSWV
 import numpy as np
@@ -106,4 +106,4 @@ electrode.visualize_surface_kinetics()
 cotpp_noncov_cc = VFSWV(surface_layer=electrode, vf_swv_input_params = scan_params)
 cotpp_noncov_cc.visualize_colormap_2D()
 cotpp_noncov_cc.visualize_colormap_3D()
-'''
+```
