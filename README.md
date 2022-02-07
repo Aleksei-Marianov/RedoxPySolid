@@ -4,7 +4,7 @@ Package allows for explicit modelling of the heterogeneous electrochemical syste
 The full description of the method is given in the 'paper <https://pubs.acs.org/doi/abs/10.1021/acs.analchem.1c01286>'_
 
 **Example:**
-::
+'''
   from RedoxPySolid.activeLayer import ElectrochemicallyActiveLayer
   from RedoxPySolid.VFSWV import VFSWV
   import numpy as np
@@ -105,4 +105,4 @@ The full description of the method is given in the 'paper <https://pubs.acs.org/
   cotpp_noncov_cc = VFSWV(surface_layer=electrode, vf_swv_input_params = scan_params)
   cotpp_noncov_cc.visualize_colormap_2D()
   cotpp_noncov_cc.visualize_colormap_3D()
-
+'''
