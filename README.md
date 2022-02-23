@@ -6,104 +6,67 @@ The full description of the method is given in the paper <https://pubs.acs.org/d
 **Example:**
 
 ```python
+# Use of the package is shown below. The parameters could be modified to suit the user requeirements.
+# The package is compiled to work with Windows OS
+# each simulation run takes several minutes to complete
+
 from RedoxPySolid.activeLayer import ElectrochemicallyActiveLayer
+from RedoxPySolid.CV import CV
 from RedoxPySolid.VFSWV import VFSWV
-import numpy as np
+import matplotlib.pyplot as plt
 
-scan_params = {'e_start': -0.5,
-                'e_step': -0.01,
-                'e_end': -1.1,
-                'amplitude': 0.025,
-                'log_frequency_min': 0,
-                'log_frequency_max': 3,
-                'resistance': 12.8,
-                'capacitance': 92*10**(-6)}
+# describe the characteristics of the surface layer
+layer_params = [{'dist_type': 'lorentz',
+        'g0': 0.35*10**(-9),
+        'e0': -0.2,
+        'sigma_e0': 0.04,
+        'log_k0': 1.2,
+        'sigma_log_k0': 0.1,
+        'a': 0.5,
+        'z': 1},
+        {'dist_type': 'lorentz',
+        'g0': 0.2*10**(-9),
+        'e0': 0,
+        'sigma_e0': 0.04,
+        'log_k0': 0.5,
+        'sigma_log_k0': 0.1,
+        'a': 0.5,
+        'z': 2}]
 
-electrode_params = [{'dist_type': 'lorentz',
-          'g0': 0.065*10**(-9)+3*0.006*10**(-9),
-          'e0': -0.949,
-          'sigma_e0': 0.15,
-          'log_k0': 2.146,
-          'sigma_log_k0': 0.03,
-          'a': 0.5,
-          'z': 1},
-          {'dist_type': 'lorentz',
-          'g0': 0.10*10**(-9),
-          'e0': -0.949,
-          'sigma_e0': 0.08,
-          'log_k0': 2.114,
-          'sigma_log_k0': 0.04,
-          'a': 0.5,
-          'z': 1},
-            {'dist_type': 'lorentz',
-          'g0': 0.05*10**(-9),
-          'e0': -0.949,
-          'sigma_e0': 0.07,
-          'log_k0': 2.079,
-          'sigma_log_k0': 0.04,
-            'a': 0.5,
-            'z': 1},
-          {'dist_type': 'lorentz',
-          'g0': 0.01*10**(-9),
-          'e0': -0.949,
-          'sigma_e0': 0.07,
-          'log_k0': 1.978,
-          'sigma_log_k0': 0.1,
-          'a': 0.5,
-          'z': 1},
-          {'dist_type': 'lorentz',
-          'g0': 0.008*10**(-9),
-          'e0': -0.949,
-          'sigma_e0': 0.07,
-          'log_k0': 1.845,
-          'sigma_log_k0': 0.1,
-          'a': 0.5,
-          'z': 1},
-          {'dist_type': 'lorentz',
-          'g0': 0.10*10**(-9),
-          'e0': -0.949,
-          'sigma_e0': 0.12,
-          'log_k0': 1.70,
-          'sigma_log_k0': 0.5,
-          'a': 0.5,
-          'z': 1},
-            {'dist_type': 'lorentz',
-          'g0': 0.10*10**(-9),
-          'e0': -0.935,
-          'sigma_e0': 0.12,
-          'log_k0': 0,
-          'sigma_log_k0': 0.7,
-            'a': 0.5,
-            'z': 1},
-            {'dist_type': 'lorentz',
-          'g0': 0.075*10**(-9),
-          'e0': -0.830,
-          'sigma_e0': 0.12,
-          'log_k0': 0,
-          'sigma_log_k0': 0.7,
-            'a': 0.5,
-            'z': 1},
-            {'dist_type': 'lorentz',
-          'g0': 0.005*10**(-9),
-          'e0': -0.78,
-          'sigma_e0': 0.12,
-          'log_k0': 0,
-          'sigma_log_k0': 0.7,
-            'a': 0.5,
-            'z': 1},
-            {'dist_type': 'lorentz',
-          'g0': 0.05*10**(-9),
-          'e0': -0.64,
-          'sigma_e0': 0.12,
-          'log_k0': 0,
-          'sigma_log_k0': 0.7,
-            'a': 0.5,
-            'z': 1}]
+# create a class instance of the surface layer and visualise the output as 2D map
+layer = ElectrochemicallyActiveLayer(31, (-0.4, 0.2), 31, (0, 2), layer_params, loading_cutoff=10**(-13))
+layer.visualize_surface_kinetics()
+output = layer.compressed_data
+print(output)
 
-electrode = ElectrochemicallyActiveLayer(41, (-1.5, -0.4), 41, (-0.5, 2.5), electrode_params, loading_cutoff=10**(-14))
-electrode.visualize_surface_kinetics()
+# define the cyclic voltammetry (CV) parameters
+cv_params = {'e_start': 0.3,
+        'e_end': -0.4,
+        'scan_rate': 0.1,
+        'resistance': 10,
+        'capacitance': 100*10**(-6)}
 
-cotpp_noncov_cc = VFSWV(surface_layer=electrode, vf_swv_input_params = scan_params)
-cotpp_noncov_cc.visualize_colormap_2D()
-cotpp_noncov_cc.visualize_colormap_3D()
+# simulate the CV and visualise the output
+cv_scan = CV(layer, cv_params)
+y = cv_scan.cv_full_response
+x = cv_scan.cv_pulse_sequence
+plt.plot(x, y)
+plt.ylabel('current density, mA/cm$^2$')
+plt.xlabel('elecrode potential, V')
+plt.show()
+
+# define the parameters of the variable frequency square wave voltammetry simulation
+vf_swv_params = {'e_start': 0.1,
+        'e_step': -0.01,
+        'e_end': -0.5,
+        'amplitude': 0.025,
+        'log_frequency_min': 0,
+        'log_frequency_max': 3,
+        'resistance': 10,
+        'capacitance': 100*10**(-6)}
+
+# simulate the VF-SWV and visualise the output
+vf_swv_scan = VFSWV(layer, vf_swv_params)
+vf_swv_scan.visualize_colormap_3D()
+vf_swv_scan.visualize_colormap_2D()
 ```
