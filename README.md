@@ -6,7 +6,6 @@ The full description of the method is given in the paper <https://pubs.acs.org/d
 **Example:**
 
 ```python
-# Use of the package is shown below. The parameters could be modified to suit the user requeirements.
 # The package is compiled to work with Windows OS
 # each simulation run takes several minutes to complete
 
@@ -51,8 +50,8 @@ cv_scan = CV(layer, cv_params)
 y = cv_scan.cv_full_response
 x = cv_scan.cv_pulse_sequence
 plt.plot(x, y)
-plt.ylabel('current density, mA/cm$^2$')
-plt.xlabel('elecrode potential, V')
+plt.ylabel('j, mA/cm$^2$')
+plt.xlabel('E, V')
 plt.show()
 
 # define the parameters of the variable frequency square wave voltammetry simulation
