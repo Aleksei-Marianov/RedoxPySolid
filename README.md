@@ -3,9 +3,7 @@
 Package allows for explicit modelling of the heterogeneous electrochemical systems.
 The full description of the method is given in the paper <https://pubs.acs.org/doi/abs/10.1021/acs.analchem.1c01286>
 
-**Installation.**
-
-Install using pip:
+**Installation:**
 ```
 pip install -i https://test.pypi.org/simple/ RedoxPySolid
 ```
