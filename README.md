@@ -6,7 +6,9 @@ The full description of the method is given in the paper <https://pubs.acs.org/d
 **Installation.**
 
 Install using pip:
+```
 pip install -i https://test.pypi.org/simple/ RedoxPySolid
+```
 
 **Example:**
 
